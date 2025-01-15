@@ -56,7 +56,7 @@ import {
               onClick={() => {}}
               variant="outlined"
               size="large"
-              className="w-full relative mr-2 text-black border-white hover:bg-neutral-300"
+              className="w-full relative text-black border-white hover:bg-neutral-300"
             >
               <Google className="size-5 absolute top-2.1 left-2.5 " />
               Continue with Google
@@ -66,15 +66,15 @@ import {
               onClick={() => {}}
               variant="outlined"
               size="large"
-              className="w-full relative mr-2 text-black border-white hover:bg-neutral-300"
+              className="w-full relative !ml-0 text-black border-white hover:bg-neutral-300"
             >
               <GitHub className="size-5 absolute top-2 left-2.5" />
               Continue with githup
             </Button>
           </CardActions>
-          <Typography className="text-s text-muted-foreground inline-block">
+          <Typography className="text-s text-muted-foreground inline-block" component="span">
             Don&apos;t have an account? {/* we used (&apos;) instead of (')*/}{" "}
-            <Typography onClick={()=>setState("signUp")} className="text-sky-700 hover:underline cursor-pointer inline-block">
+            <Typography onClick={()=>setState("signUp")} className="text-sky-700 hover:underline cursor-pointer inline-block" component="span">
               Sign up
             </Typography>
           </Typography>
