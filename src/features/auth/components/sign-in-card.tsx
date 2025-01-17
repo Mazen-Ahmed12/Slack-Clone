@@ -12,13 +12,21 @@ import {
 import { Google, GitHub } from "@mui/icons-material";
 import { SignInFlow } from "../types";
 
+import { useAuthActions } from "@convex-dev/auth/react";
+
 interface SignInCardProps {
   setState: (state: SignInFlow) => void;
 }
 
 export const SignInCard = ({ setState }: SignInCardProps) => {
+  const { signIn } = useAuthActions();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleProviderSignIn = (value: "github" | "google") => {
+    signIn(value);
+  };
 
   return (
     <Card className="w-full h-full p-6 text-xl font-bold">
@@ -29,7 +37,9 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
           <OutlinedInput
             disabled={false}
             value={email}
-            onChange={(e) => {setEmail(e.target.value)}}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
             placeholder="Email"
             type="email"
             required
@@ -38,7 +48,9 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
           <OutlinedInput
             disabled={false}
             value={password}
-            onChange={(e) => {setPassword(e.target.value)}}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
             placeholder="password"
             type="password"
             required
@@ -67,7 +79,7 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
           </Button>
           <Button
             disabled={false}
-            onClick={() => {}}
+            onClick={() => handleProviderSignIn("github")}
             variant="outlined"
             size="large"
             className="w-full relative !ml-0 text-black border-white hover:bg-neutral-300"
