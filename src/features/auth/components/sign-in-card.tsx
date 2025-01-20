@@ -24,7 +24,7 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleProviderSignIn = (value: "github" | "google") => {
+  const onProviderSignIn = (value: "github" | "google") => {
     signIn(value);
   };
 
@@ -69,7 +69,7 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
         <CardActions className="flex flex-col gap-y-2.5">
           <Button
             disabled={false}
-            onClick={() => {}}
+            onClick={() => onProviderSignIn("google")}
             variant="outlined"
             size="large"
             className="w-full relative text-black border-white hover:bg-neutral-300"
@@ -79,7 +79,7 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
           </Button>
           <Button
             disabled={false}
-            onClick={() => handleProviderSignIn("github")}
+            onClick={() => onProviderSignIn("github")}
             variant="outlined"
             size="large"
             className="w-full relative !ml-0 text-black border-white hover:bg-neutral-300"
