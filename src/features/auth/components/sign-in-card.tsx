@@ -8,6 +8,7 @@ import {
   OutlinedInput,
   Typography,
   CardActions,
+  Alert,
 } from "@mui/material";
 import { Google, GitHub } from "@mui/icons-material";
 import { SignInFlow } from "../types";
@@ -23,19 +24,45 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleProviderSignIn = (value: "github" | "google") => {
-    signIn(value);
+  const onPasswordSignIn = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setPending(true);
+    signIn("password", { email, password, flow: "signIn" })
+      .catch(() => {
+        setError("Invalid email or password");
+      })
+      .finally(() => {
+        setPending(false);
+      });
+  };
+
+  const onProviderSignIn = (value: "github" | "google") => {
+    setPending(true);
+    signIn(value).finally(() => {
+      setPending(false);
+    });
   };
 
   return (
     <Card className="w-full h-full p-6 text-xl font-bold">
       <CardHeader title="Login to continue" className="px-0 pt-0" />
+      {!!error && (
+        <Alert
+          severity="error"
+          className="!bg-destructive/15 p3 rounded-md flex items-center gap-x-2 text-sm !text-destructive mb-6"
+        >
+          <strong>{error}</strong>
+        </Alert>
+      )}
       <CardContent className="space-y-5">
         <Typography>Use your email or another service to continue</Typography>
-        <form className="space-y-2.5">
+        <form onSubmit={onPasswordSignIn} className="space-y-2.5">
           <OutlinedInput
-            disabled={false}
+            disabled={pending}
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -46,7 +73,7 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
             fullWidth
           />
           <OutlinedInput
-            disabled={false}
+            disabled={pending}
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
@@ -60,7 +87,7 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
             type="submit"
             className="w-full bg-slate-900 text-white hover:bg-gray-800 normal-case"
             size="large"
-            disabled={false}
+            disabled={pending}
           >
             continue
           </Button>
@@ -68,8 +95,8 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
         <Divider variant="middle" />
         <CardActions className="flex flex-col gap-y-2.5">
           <Button
-            disabled={false}
-            onClick={() => {}}
+            disabled={pending}
+            onClick={() => onProviderSignIn("google")}
             variant="outlined"
             size="large"
             className="w-full relative text-black border-white hover:bg-neutral-300"
@@ -78,8 +105,8 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
             Continue with Google
           </Button>
           <Button
-            disabled={false}
-            onClick={() => handleProviderSignIn("github")}
+            disabled={pending}
+            onClick={() => onProviderSignIn("github")}
             variant="outlined"
             size="large"
             className="w-full relative !ml-0 text-black border-white hover:bg-neutral-300"

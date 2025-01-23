@@ -12,6 +12,9 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        destructive: {
+          DEFAULT: "#ff4d4f", // base color
+        },
       },
     },
   },
