@@ -1,17 +1,15 @@
 "use client";
 
-import { useAuthActions } from "@convex-dev/auth/react";
-import { Button } from "@mui/material";
+import { UserButton } from "@/features/auth/components/user-button";
+import { useGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces";
+import { useCreateWorkspaceModal } from "@/features/workspaces/store/use-create-worrkspace-modal";
+import { useEffect, useMemo } from "react";
 
 export default function Home() {
-  const { signOut } = useAuthActions();
 
   return (
-    <div>
-      Logged in!
-      <Button onClick={()=>signOut()}>
-        Sign out
-      </Button>
+    <div className="flex flex-row">
+      <UserButton />
     </div>
   );
 }
